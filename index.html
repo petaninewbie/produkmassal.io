@@ -145,6 +145,47 @@
 </div>
 
 <script>
+<script>
+    // FUNGSI AUTO HIDE SIDEBAR
+    function toggleSidebar() {
+        const sidebar = document.getElementById("mySidebar");
+        const content = document.getElementById("mainContent");
+        
+        if (window.innerWidth > 768) {
+            // Mode Desktop: Geser sidebar ke kiri (hide) dan content melebar (full)
+            sidebar.classList.toggle("hidden");
+            content.classList.toggle("full");
+        } else {
+            // Mode HP: Munculkan sidebar (active) overlay
+            sidebar.classList.toggle("active");
+        }
+    }
+
+    // FUNGSI TUTUP SIDEBAR OTOMATIS SAAT KLIK MENU (HP)
+    function autoClose() {
+        if (window.innerWidth <= 768) {
+            document.getElementById("mySidebar").classList.remove("active");
+        }
+    }
+
+    // FUNGSI KALKULATOR
+    function calc() {
+        const q = parseFloat(document.getElementById('target').value) || 0;
+        const fc = parseFloat(document.getElementById('fc').value) || 0;
+        const vc = parseFloat(document.getElementById('vc').value) || 0;
+        const m = parseFloat(document.getElementById('profit').value) || 0;
+
+        const tc = fc + (vc * q);
+        const hpp = q > 0 ? tc / q : 0;
+        const price = hpp + (hpp * (m / 100));
+
+        document.getElementById('resTC').innerText = "Rp " + tc.toLocaleString('id-ID');
+        document.getElementById('resHPP').innerText = "Rp " + hpp.toLocaleString('id-ID');
+        document.getElementById('resPrice').innerText = "Rp " + price.toLocaleString('id-ID');
+    }
+    calc();
+</script>
+    
     function calc() {
         const q = parseFloat(document.getElementById('target').value) || 0;
         const fc = parseFloat(document.getElementById('fc').value) || 0;
