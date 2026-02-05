@@ -152,74 +152,74 @@
         <a href="#diskusi" onclick="closeSidebar()" style="color: var(--warning);">7. Forum Diskusi</a>
     </div>
 
-    <div class="content">
-    <h1>Manajemen Produksi Massal (Hardware & Jasa)</h1>
+    <div class="content" id="content">
+        <h1>Manajemen Produksi Massal (Hardware & Jasa)</h1>
 
-    <div id="teori" class="card">
-        <h2>1. Pengertian & Karakteristik</h2>
-        <p>Produksi massal adalah sistem pembuatan barang/jasa dalam jumlah besar dengan standar yang seragam.</p>
-        <ul>
-            <li><strong>Hardware:</strong> Fokus pada presisi mesin, stok bahan baku, dan distribusi fisik.</li>
-            <li><strong>Jasa:</strong> Fokus pada standarisasi SOP, kapasitas server, dan kecepatan respon.</li>
-        </ul>
-        <h3>4 Tahap Utama (PPC):</h3>
-        <ol>
-            <li><strong>Routing:</strong> Penentuan alur kerja.</li>
-            <li><strong>Scheduling:</strong> Penentuan jadwal waktu.</li>
-            <li><strong>Dispatching:</strong> Instruksi memulai kerja.</li>
-            <li><strong>Follow-up:</strong> Evaluasi hambatan (bottleneck).</li>
-        </ol>
-    </div>
+        <div id="teori" class="card">
+            <h2>1. Pengertian & Karakteristik</h2>
+            <p>Produksi massal adalah sistem pembuatan barang/jasa dalam jumlah besar dengan standar yang seragam.</p>
+                        <ul>
+                <li><strong>Hardware:</strong> Fokus pada presisi mesin, stok bahan baku, dan distribusi fisik.</li>
+                <li><strong>Jasa:</strong> Fokus pada standarisasi SOP, kapasitas server, dan kecepatan respon.</li>
+            </ul>
+            <h3>4 Tahap Utama (PPC):</h3>
+            <ol>
+                <li><strong>Routing:</strong> Penentuan alur kerja.</li>
+                <li><strong>Scheduling:</strong> Penentuan jadwal waktu.</li>
+                <li><strong>Dispatching:</strong> Instruksi memulai kerja.</li>
+                <li><strong>Follow-up:</strong> Evaluasi hambatan (bottleneck).</li>
+            </ol>
+        </div>
 
         <div id="studi-kasus" class="card">
-        <h2>2. Studi Kasus Spesifik</h2>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div style="background: #f9f9f9; padding: 15px; border-left: 5px solid var(--accent);">
-                <h4>Hardware: Pabrik Sepatu</h4>
-                <p>Fokus pada mesin injeksi sol dan penjahitan upper. Kendala utama: Kerusakan mesin fisik.</p>
-            </div>
-            <div style="background: #f9f9f9; padding: 15px; border-left: 5px solid var(--success);">
-                <h4>Jasa: Aplikasi Fitness</h4>
-                <p>Fokus pada otomatisasi payment gateway dan kapasitas server. Kendala utama: System downtime.</p>
+            <h2>2. Studi Kasus Spesifik</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="background: #f9f9f9; padding: 15px; border-left: 5px solid var(--accent);">
+                    <h4>Hardware: Pabrik Sepatu</h4>
+                    <p>Fokus pada mesin injeksi sol dan penjahitan upper. Kendala utama: Kerusakan mesin fisik.</p>
+                </div>
+                <div style="background: #f9f9f9; padding: 15px; border-left: 5px solid var(--success);">
+                    <h4>Jasa: Aplikasi Fitness</h4>
+                    <p>Fokus pada otomatisasi payment gateway dan kapasitas server. Kendala utama: System downtime.</p>
+                </div>
             </div>
         </div>
-    </div>
 
         <div id="kalkulator" class="card">
-        <h2>3. Simulasi Biaya Interaktif</h2>
-        <div class="calculator">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                <div>
-                    <div class="input-group">
-                        <label>Target Produksi (Unit)</label>
-                        <input type="number" id="target" value="1000" oninput="calc()">
+            <h2>3. Simulasi Biaya Interaktif</h2>
+                        <div class="calculator">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                    <div>
+                        <div class="input-group">
+                            <label>Target Produksi (Unit)</label>
+                            <input type="number" id="target" value="1000" oninput="calc()">
+                        </div>
+                        <div class="input-group">
+                            <label>Total Biaya Tetap (Sewa/Gaji - Rp)</label>
+                            <input type="number" id="fc" value="50000000" oninput="calc()">
+                        </div>
+                        <div class="input-group">
+                            <label>Biaya Variabel per Unit (Rp)</label>
+                            <input type="number" id="vc" value="110000" oninput="calc()">
+                        </div>
+                        <div class="input-group">
+                            <label>Margin Profit (%)</label>
+                            <input type="number" id="profit" value="25" oninput="calc()">
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label>Total Biaya Tetap (Sewa/Gaji - Rp)</label>
-                        <input type="number" id="fc" value="50000000" oninput="calc()">
+                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                        <h3>Hasil Analisis:</h3>
+                        <p>Total Biaya: <br><span class="res-val" id="resTC">Rp 0</span></p>
+                        <p>HPP per Unit: <br><span class="res-val" id="resHPP">Rp 0</span></p>
+                        <p>Harga Jual (Rekomendasi): <br><span class="res-val" id="resPrice">Rp 0</span></p>
                     </div>
-                    <div class="input-group">
-                        <label>Biaya Variabel per Unit (Rp)</label>
-                        <input type="number" id="vc" value="110000" oninput="calc()">
-                    </div>
-                    <div class="input-group">
-                        <label>Margin Profit (%)</label>
-                        <input type="number" id="profit" value="25" oninput="calc()">
-                    </div>
-                </div>
-                <div style="background: white; padding: 20px; border-radius: 8px;">
-                    <h3>Hasil Analisis:</h3>
-                    <p>Total Biaya: <br><span class="res-val" id="resTC">Rp 0</span></p>
-                    <p>HPP per Unit: <br><span class="res-val" id="resHPP">Rp 0</span></p>
-                    <p>Harga Jual (Rekomendasi): <br><span class="res-val" id="resPrice">Rp 0</span></p>
                 </div>
             </div>
         </div>
-    </div>
 
         <div id="qc" class="card">
             <h2>4. Pengendalian Mutu (QC)</h2>
-            <table>
+                        <table>
                 <tr><th>Tahap</th><th>Aktivitas</th></tr>
                 <tr><td>Input</td><td>Cek bahan baku datang</td></tr>
                 <tr><td>Proses</td><td>Pantau suhu & kecepatan mesin</td></tr>
@@ -238,31 +238,32 @@
         </div>
 
         <div id="laporan" class="card">
-        <h2>6. Format Laporan Bulanan QC</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Metrik</th>
-                    <th>Bulan Lalu</th>
-                    <th>Bulan Ini</th>
-                    <th>Trend</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rasio Reject</td>
-                    <td>2.5%</td>
-                    <td>1.8%</td>
-                    <td><span class="badge bg-success">Turun (Bagus)</span></td>
-                </tr>
-                <tr>
-                    <td>Efisiensi Biaya</td>
-                    <td>Rp 165rb/unit</td>
-                    <td>Rp 160rb/unit</td>
-                    <td><span class="badge bg-success">Meningkat</span></td>
-                </tr>
-            </tbody>
-        </table>
+            <h2>6. Format Laporan Bulanan QC</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Metrik</th>
+                        <th>Bulan Lalu</th>
+                        <th>Bulan Ini</th>
+                        <th>Trend</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Rasio Reject</td>
+                        <td>2.5%</td>
+                        <td>1.8%</td>
+                        <td><span class="badge bg-success">Turun (Bagus)</span></td>
+                    </tr>
+                    <tr>
+                        <td>Efisiensi Biaya</td>
+                        <td>Rp 165rb/unit</td>
+                        <td>Rp 160rb/unit</td>
+                        <td><span class="badge bg-success">Meningkat</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <div id="diskusi" class="card">
             <h2>7. Modul Diskusi & Forum Analisis</h2>
@@ -281,7 +282,7 @@
 
             <div class="scenario-box">
                 <h4>Skenario Diskusi 2: Transformasi Jasa</h4>
-                <p>Sebuah restoran tradisional ingin mengubah sistem penjualannya menjadi "Produksi Massal" melalui aplikasi Delivery Online saja (Cloud Kitchen).</p>
+                                <p>Sebuah restoran tradisional ingin mengubah sistem penjualannya menjadi "Produksi Massal" melalui aplikasi Delivery Online saja (Cloud Kitchen).</p>
                 
                 <span class="question-title">Pertanyaan Diskusi:</span>
                 <ul>
