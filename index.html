@@ -10,44 +10,149 @@
             --secondary: #34495e;
             --accent: #3498db;
             --success: #27ae60;
-            --danger: #e74c3c;
+            --warning: #f39c12;
             --light: #ecf0f1;
+            --sidebar-w: 260px;
         }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; line-height: 1.6; color: #333; margin: 0; background: #f4f7f6; }
-        .sidebar { height: 100%; width: 250px; position: fixed; background: var(--primary); padding-top: 20px; color: white; overflow-x: hidden; }
-        .sidebar a { padding: 15px 25px; text-decoration: none; font-size: 14px; color: #bdc3c7; display: block; border-bottom: 1px solid #3e4f5f; }
-        .sidebar a:hover { background: var(--secondary); color: white; }
-        .content { margin-left: 260px; padding: 40px; max-width: 1000px; }
-        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 15px rgba(0,0,0,0.1); margin-bottom: 40px; }
-        h1, h2, h3 { color: var(--primary); }
-        h1 { border-bottom: 4px solid var(--accent); padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+
+        body { 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            line-height: 1.6; 
+            color: #333; 
+            margin: 0; 
+            background: #f4f7f6; 
+            overflow-x: hidden; 
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar { 
+            height: 100vh; 
+            width: var(--sidebar-w); 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            background: var(--primary); 
+            padding-top: 60px; 
+            color: white; 
+            transition: transform 0.3s ease-in-out; 
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar a { 
+            padding: 15px 25px; 
+            text-decoration: none; 
+            font-size: 14px; 
+            color: #bdc3c7; 
+            display: block; 
+            border-bottom: 1px solid #3e4f5f; 
+        }
+        
+        .sidebar a:hover { 
+            background: var(--secondary); 
+            color: white; 
+            border-left: 4px solid var(--accent);
+        }
+
+        /* --- CONTENT AREA --- */
+        .content { 
+            margin-left: var(--sidebar-w); 
+            padding: 30px; 
+            transition: margin-left 0.3s ease-in-out; 
+        }
+
+        /* --- TOMBOL TOGGLE --- */
+        .toggle-btn {
+            position: fixed;
+            left: 15px;
+            top: 15px;
+            z-index: 1001;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+        .toggle-btn:hover { background: #2980b9; }
+
+        /* --- RESPONSIVE LOGIC --- */
+        
+        /* Mode Mobile (Layar Kecil) */
+        @media (max-width: 768px) {
+            .sidebar { 
+                transform: translateX(-100%); /* Sembunyi ke kiri default */
+            }
+            .sidebar.active { 
+                transform: translateX(0); /* Muncul saat aktif */
+            }
+            .content { 
+                margin-left: 0; /* Konten full width */
+                padding: 20px;
+                padding-top: 60px; /* Ruang untuk tombol */
+            }
+            /* Overlay gelap saat sidebar muncul di HP */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            .overlay.active { display: block; }
+        }
+
+        /* Mode Desktop (Layar Besar) - Fitur Hide Sidebar */
+        @media (min-width: 769px) {
+            .sidebar.collapsed {
+                transform: translateX(-100%);
+            }
+            .content.collapsed {
+                margin-left: 0;
+            }
+        }
+
+        /* --- UTILITY CSS --- */
+        .card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        h1, h2, h3, h4 { color: var(--primary); }
+        h2 { border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-bottom: 10px; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        .res-val { font-size: 1.2em; font-weight: bold; color: var(--accent); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         th { background: var(--primary); color: white; }
-        .calculator { background: var(--light); padding: 20px; border-radius: 8px; border: 1px solid #dcdde1; }
-        .input-group { margin-bottom: 15px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; }
-        .res-val { font-weight: bold; color: var(--accent); font-size: 1.2em; }
-        .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; color: white; }
-        .bg-success { background: var(--success); }
-        .bg-danger { background: var(--danger); }
-        @media print { .sidebar, .no-print { display: none; } .content { margin-left: 0; } }
+        
+        /* Kotak Diskusi Khusus */
+        .scenario-box { background: #f0f7ff; border-left: 5px solid var(--accent); padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .discussion-box { background: #fffdf0; border-left: 5px solid var(--warning); padding: 15px; margin: 20px 0; border-radius: 4px; }
+        .question-title { font-weight: bold; color: var(--secondary); margin-top: 10px; display: block; text-decoration: underline; }
+        
+        @media print { .sidebar, .toggle-btn, .no-print { display: none; } .content { margin-left: 0; } }
     </style>
 </head>
 <body>
 
-<div class="sidebar no-print">
-    <h3 style="padding-left: 25px;">Navigasi</h3>
-    <a href="#teori">1. Teori Dasar</a>
-    <a href="#studi-kasus">2. Studi Kasus</a>
-    <a href="#kalkulator">3. Simulasi Biaya</a>
-    <a href="#qc">4. Pengendalian Mutu</a>
-    <a href="#checklist">5. Checklist Harian</a>
-    <a href="#laporan">6. Laporan Bulanan</a>
-</div>
+    <button class="toggle-btn no-print" onclick="toggleSidebar()">☰ Menu</button>
+    
+    <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
 
-<div class="content">
+    <div class="sidebar no-print" id="sidebar">
+        <h3 style="padding-left: 25px; color: white;">Navigasi</h3>
+        <a href="#teori" onclick="closeSidebar()">1. Teori Dasar</a>
+        <a href="#studi-kasus" onclick="closeSidebar()">2. Studi Kasus</a>
+        <a href="#kalkulator" onclick="closeSidebar()">3. Simulasi Biaya</a>
+        <a href="#qc" onclick="closeSidebar()">4. Pengendalian Mutu</a>
+        <a href="#checklist" onclick="closeSidebar()">5. Checklist Harian</a>
+        <a href="#laporan" onclick="closeSidebar()">6. Laporan Bulanan</a>
+        <a href="#diskusi" onclick="closeSidebar()" style="color: var(--warning);">7. Forum Diskusi</a>
+    </div>
+
+    <div class="content">
     <h1>Manajemen Produksi Massal (Hardware & Jasa)</h1>
 
     <div id="teori" class="card">
@@ -66,7 +171,7 @@
         </ol>
     </div>
 
-    <div id="studi-kasus" class="card">
+        <div id="studi-kasus" class="card">
         <h2>2. Studi Kasus Spesifik</h2>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div style="background: #f9f9f9; padding: 15px; border-left: 5px solid var(--accent);">
@@ -80,7 +185,7 @@
         </div>
     </div>
 
-    <div id="kalkulator" class="card">
+        <div id="kalkulator" class="card">
         <h2>3. Simulasi Biaya Interaktif</h2>
         <div class="calculator">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
@@ -112,28 +217,28 @@
         </div>
     </div>
 
-    <div id="qc" class="card">
-        <h2>4. Pengendalian Mutu & Checklist QC</h2>
-        <p>Gunakan daftar periksa harian untuk meminimalisir produk gagal (Reject).</p>
-        
-        <table id="checklist">
-            <thead>
-                <tr>
-                    <th>Kategori</th>
-                    <th>Item Pemeriksaan</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Input</td><td>Cek kualitas bahan baku dari supplier</td><td>[ OK / NO ]</td></tr>
-                <tr><td>Proses</td><td>Kalibrasi mesin/server sesuai SOP</td><td>[ OK / NO ]</td></tr>
-                <tr><td>Output</td><td>Uji petik (Sampling) produk jadi</td><td>[ OK / NO ]</td></tr>
-            </tbody>
-        </table>
-    </div>
+        <div id="qc" class="card">
+            <h2>4. Pengendalian Mutu (QC)</h2>
+            <table>
+                <tr><th>Tahap</th><th>Aktivitas</th></tr>
+                <tr><td>Input</td><td>Cek bahan baku datang</td></tr>
+                <tr><td>Proses</td><td>Pantau suhu & kecepatan mesin</td></tr>
+                <tr><td>Output</td><td>Sampling acak produk jadi</td></tr>
+            </table>
+        </div>
 
-    <div id="laporan" class="card">
-        <h2>5. Format Laporan Bulanan QC</h2>
+        <div id="checklist" class="card">
+            <h2>5. Checklist Harian</h2>
+            <table>
+                <tr><th>Item</th><th>Status</th></tr>
+                <tr><td>Kalibrasi Mesin</td><td>[ ] OK</td></tr>
+                <tr><td>Kebersihan Area</td><td>[ ] OK</td></tr>
+                <tr><td>Laporan Shift</td><td>[ ] OK</td></tr>
+            </table>
+        </div>
+
+        <div id="laporan" class="card">
+        <h2>6. Format Laporan Bulanan QC</h2>
         <table>
             <thead>
                 <tr>
@@ -158,124 +263,95 @@
                 </tr>
             </tbody>
         </table>
-        <button class="no-print" onclick="window.print()" style="padding: 12px 25px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">Cetak Materi ke PDF</button>
+
+        <div id="diskusi" class="card">
+            <h2>7. Modul Diskusi & Forum Analisis</h2>
+            <p>Gunakan bagian ini untuk memicu diskusi kelompok atau refleksi mandiri setelah mempelajari materi.</p>
+
+            <div class="scenario-box">
+                <h4>Skenario Diskusi 1: Dilema Kualitas vs Kuantitas</h4>
+                <p>Sebuah pabrik masker mendapati bahwa salah satu mesin pemotongnya mulai tidak presisi, menyebabkan 5% produk cacat. Jika mesin dihentikan untuk perbaikan (servis), target produksi massal hari ini tidak akan tercapai dan perusahaan terancam denda pinalti dari pembeli.</p>
+                
+                <span class="question-title">Pertanyaan Diskusi:</span>
+                <ul>
+                    <li>Sebagai Manajer Produksi, apakah Anda akan menghentikan mesin atau tetap lanjut dengan risiko 5% barang rusak tersebut? Berikan alasan berbasis biaya (TC/AC).</li>
+                    <li>Bagaimana solusi jangka panjang untuk mencegah "pilihan sulit" ini terjadi lagi?</li>
+                </ul>
+            </div>
+
+            <div class="scenario-box">
+                <h4>Skenario Diskusi 2: Transformasi Jasa</h4>
+                <p>Sebuah restoran tradisional ingin mengubah sistem penjualannya menjadi "Produksi Massal" melalui aplikasi Delivery Online saja (Cloud Kitchen).</p>
+                
+                <span class="question-title">Pertanyaan Diskusi:</span>
+                <ul>
+                    <li>Identifikasi apa yang menjadi <strong>Biaya Tetap</strong> dan <strong>Biaya Variabel</strong> dalam model bisnis ini!</li>
+                    <li>Apa tantangan terbesar dalam melakukan <strong>Standardisasi Produk</strong> makanan agar rasanya selalu sama di ribuan porsi harian?</li>
+                </ul>
+            </div>
+
+            <div class="discussion-box">
+                <h4>Topik Debat: Otomatisasi vs Tenaga Kerja</h4>
+                <p><em>"Penggunaan robot dalam produksi massal menurunkan biaya variabel secara drastis, namun menghilangkan lapangan kerja manusia."</em></p>
+                
+                <span class="question-title">Tugas Kelompok:</span>
+                <p>Bagi kelompok menjadi tim <strong>PRO (Otomatisasi)</strong> dan tim <strong>KONTRA (Manual)</strong>. Debat difokuskan pada aspek:</p>
+                <ul>
+                    <li>Efisiensi Biaya</li>
+                    <li>Kualitas Produk (QC)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="no-print" style="text-align: center; margin-top: 50px;">
+            <button onclick="window.print()" style="padding: 10px 20px; background: #333; color: white; border: none; cursor: pointer; border-radius: 5px;">Cetak Halaman (PDF)</button>
+        </div>
     </div>
-    <div id="diskusi" class="card">
-        <h2>7. Modul Diskusi & Forum Analisis</h2>
-        <p>Gunakan bagian ini untuk memicu diskusi kelompok atau refleksi mandiri setelah mempelajari materi.</p>
 
-        <div class="scenario-box">
-            <h3>Skenario Diskusi 1: Dilema Kualitas vs Kuantitas</h3>
-            <p>Sebuah pabrik masker mendapati bahwa salah satu mesin pemotongnya mulai tidak presisi, menyebabkan 5% produk cacat. Jika mesin dihentikan untuk perbaikan (servis), target produksi massal hari ini tidak akan tercapai dan perusahaan terancam denda pinalti dari pembeli.</p>
-            <span class="question-item">Pertanyaan Diskusi:</span>
-            <ul>
-                <li>Sebagai Manajer Produksi, apakah Anda akan menghentikan mesin atau tetap lanjut dengan risiko 5% barang rusak tersebut? Berikan alasan berbasis biaya (TC/AC).</li>
-                <li>Bagaimana solusi jangka panjang untuk mencegah "pilihan sulit" ini terjadi lagi?</li>
-            </ul>
-        </div>
+    <script>
+        // LOGIKA SIDEBAR & CALCULATOR
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        const overlay = document.getElementById('overlay');
 
-        <div class="discussion-box">
-            <h3>Skenario Diskusi 2: Transformasi Jasa</h3>
-            <p>Sebuah restoran tradisional ingin mengubah sistem penjualannya menjadi "Produksi Massal" melalui aplikasi Delivery Online saja (Cloud Kitchen).</p>
-            <span class="question-item">Pertanyaan Diskusi:</span>
-            <ul>
-                <li>Identifikasi apa yang menjadi <strong>Biaya Tetap</strong> dan <strong>Biaya Variabel</strong> dalam model bisnis ini!</li>
-                <li>Apa tantangan terbesar dalam melakukan <strong>Standardisasi Produk</strong> makanan agar rasanya selalu sama di ribuan porsi harian?</li>
-            </ul>
-        </div>
+        function toggleSidebar() {
+            if (window.innerWidth <= 768) {
+                // Logic HP: Tambah class active
+                sidebar.classList.toggle('active');
+                overlay.classList.toggle('active');
+            } else {
+                // Logic Desktop: Collapse sidebar
+                sidebar.classList.toggle('collapsed');
+                content.classList.toggle('collapsed');
+            }
+        }
 
-        <div class="scenario-box">
-            <h3>Topik Debat: Otomatisasi vs Tenaga Kerja</h3>
-            <p>"Penggunaan robot dalam produksi massal menurunkan biaya variabel secara drastis, namun menghilangkan lapangan kerja manusia."</p>
-            <span class="question-item">Tugas Kelompok:</span>
-            <p>Bagi kelompok menjadi tim PRO (Otomatisasi) dan tim KONTRA (Manual). Debat difokuskan pada aspek <strong>Efisiensi Biaya</strong> dan <strong>Kualitas Produk (QC)</strong>.</p>
-        </div>
+        function closeSidebar() {
+            // Hanya jalan di mode HP agar otomatis nutup saat klik menu
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        }
 
-        <div style="text-align: center; margin-top: 30px;" class="no-print">
-            <button onclick="window.print()" style="padding: 15px 30px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Cetak Seluruh Materi & Modul Diskusi (PDF)</button>
-        </div>
-    </div>
-</div>
+        function calc() {
+            const q = parseFloat(document.getElementById('target').value) || 0;
+            const fc = parseFloat(document.getElementById('fc').value) || 0;
+            const vc = parseFloat(document.getElementById('vc').value) || 0;
+            const profit = parseFloat(document.getElementById('profit').value) || 0;
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const sidebar = document.getElementById('mySidebar');
-  const content = document.getElementById('mainContent');
-  const toggleBtn = document.getElementById('sidebarToggle');
-  const overlay = document.getElementById('overlay');
+            const tc = fc + (vc * q);
+            const hpp = q > 0 ? tc / q : 0;
+            const price = hpp + (hpp * (profit / 100));
 
-  function openSidebarMobile() {
-    sidebar.classList.add('active');
-    overlay.classList.add('show');
-    document.body.style.overflow = 'hidden'; // cegah scroll body saat menu terbuka
-  }
-
-  function closeSidebarMobile() {
-    sidebar.classList.remove('active');
-    overlay.classList.remove('show');
-    document.body.style.overflow = '';
-  }
-
-  function toggleSidebar() {
-    if (window.innerWidth <= 768) {
-      if (sidebar.classList.contains('active')) {
-        closeSidebarMobile();
-      } else {
-        openSidebarMobile();
-      }
-    } else {
-      // desktop behavior: toggle collapse (jika Anda ingin ada collapse desktop)
-      sidebar.classList.toggle('hidden');
-      content.classList.toggle('full');
-    }
-  }
-
-  // event bindings
-  if (toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
-  if (overlay) overlay.addEventListener('click', closeSidebarMobile);
-
-  // close sidebar when menu link clicked (mobile)
-  sidebar.querySelectorAll('a').forEach(function (a) {
-    a.addEventListener('click', function () {
-      if (window.innerWidth <= 768) closeSidebarMobile();
-    });
-  });
-
-  // handle resize: ensure mobile overlay/active dibersihkan saat pindah ke desktop
-  window.addEventListener('resize', function () {
-    if (window.innerWidth > 768) {
-      sidebar.classList.remove('active');
-      overlay.classList.remove('show');
-      document.body.style.overflow = '';
-    }
-  });
-
-  // --- Kalkulator (satu fungsi calc unik, gunakan inputs existing yang sudah ada) ---
-  function calc() {
-    const q = parseFloat(document.getElementById('target').value) || 0;
-    const fc = parseFloat(document.getElementById('fc').value) || 0;
-    const vc = parseFloat(document.getElementById('vc').value) || 0;
-    const m = parseFloat(document.getElementById('profit').value) || 0;
-
-    const tc = fc + (vc * q);
-    const hpp = q > 0 ? tc / q : 0;
-    const price = hpp + (hpp * (m / 100));
-
-    document.getElementById('resTC').innerText = "Rp " + tc.toLocaleString('id-ID');
-    document.getElementById('resHPP').innerText = "Rp " + hpp.toLocaleString('id-ID');
-    document.getElementById('resPrice').innerText = "Rp " + price.toLocaleString('id-ID');
-  }
-
-  // attach calc to inputs (in case some oninput attributes removed)
-  ['target', 'fc', 'vc', 'profit'].forEach(function(id) {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', calc);
-  });
-
-  // initial calc
-  calc();
-});
-</script>
+            document.getElementById('resTC').innerText = "Rp " + tc.toLocaleString('id-ID');
+            document.getElementById('resHPP').innerText = "Rp " + hpp.toLocaleString('id-ID');
+            document.getElementById('resPrice').innerText = "Rp " + price.toLocaleString('id-ID');
+        }
+        
+        // Jalankan sekali saat load
+        calc();
+    </script>
 
 </body>
 </html>
